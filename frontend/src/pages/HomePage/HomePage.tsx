@@ -29,7 +29,7 @@ const HomePage: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="w-[50%]">
+                <div className="w-[50%] mt-[70px]">
                     <div className="grid grid-cols-2 gap-4">
                         <InfoBlock
                             icon={<FaHeart size={30} />}
