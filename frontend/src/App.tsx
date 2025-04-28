@@ -1,13 +1,15 @@
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from "./pages/HomePage/HomePage.tsx";
 
-function App() {
+const App = () => {
+
     return (
-        <div className="flex items-center justify-center min-h-screen bg-black p-4">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-center text-white">
-                скоро тут будет жесточайший проект на хакатон...
-            </h1>
-        </div>
-    )
-}
+            <Router>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                </Routes>
+            </Router>
+    );
+};
 
-export default App
+export default App;
