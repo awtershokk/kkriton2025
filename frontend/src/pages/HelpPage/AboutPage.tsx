@@ -17,7 +17,7 @@ const AboutPage = () => {
                 </h1>
             }
             content={
-                <div className="max-w-12xl mx-auto">
+                <div className="max-w-12xl pt-35 mx-auto">
                     <div className="bg-gray-800 p-6 rounded-lg shadow-md">
                         <h2 className="text-2xl font-semibold text-white mb-4">О нашей платформе</h2>
                         <p className="text-white mb-4">

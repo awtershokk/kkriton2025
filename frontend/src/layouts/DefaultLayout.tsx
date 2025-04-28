@@ -7,9 +7,9 @@ interface LayoutProps {
     content: ReactNode;
 }
 
-const Layout = ({ children, header, content }: LayoutProps) => {
+const Layout = ({ header, content }: LayoutProps) => {
     return (
-        <div className="min-h-screen bg-gray-900 flex">
+        <div className="min-h-screen bg-gray-800 flex">
             <div className="fixed left-10 top-1/2 transform -translate-y-1/2">
                 <SidebarMenu />
             </div>
@@ -17,7 +17,7 @@ const Layout = ({ children, header, content }: LayoutProps) => {
                 {header}
             </div>
 
-            <main className="pl-80 pt-35 pr-10 w-full">
+            <main className="pl-80  pr-10 w-full">
                 <div className="bg-gray-800">
                     {content}
                 </div>

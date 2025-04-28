@@ -3,6 +3,8 @@ import HomePage from "./pages/HomePage/HomePage.tsx";
 import LoginForm from "./pages/Auth/LoginPage.tsx";
 import RegForm from "./pages/Auth/RegisterPage.tsx";
 import AboutPage from "./pages/HelpPage/AboutPage.tsx";
+import AssistantPage from "./pages/Asist/AssistantPage.tsx";
+
 
 const App = () => {
 
@@ -13,6 +15,8 @@ const App = () => {
                 <Route path="/login" element={<LoginForm />} />
                 <Route path="/register" element={<RegForm />} />
                 <Route path="/about" element={<AboutPage />} />
+                <Route path="/assistant" element={<AssistantPage/>} />
+
             </Routes>
         </Router>
     );
