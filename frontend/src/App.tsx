@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from "./pages/HomePage/HomePage.tsx";
+import LoginForm from "./pages/Auth/LoginPage.tsx";
+import RegForm from "./pages/Auth/RegisterPage.tsx";
 
 const App = () => {
 
@@ -7,6 +9,9 @@ const App = () => {
             <Router>
                 <Routes>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/login" element={<LoginForm />} />
+                    <Route path="/register" element={<RegForm />} />
+
                 </Routes>
             </Router>
     );
