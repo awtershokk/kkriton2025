@@ -7,7 +7,7 @@ const SidebarMenu = () => {
 
     const menuItems = [
         { label: "О нас", icon: <IoMdInformationCircleOutline />, link: "/about", group: "Основные" },
-        { label: "Помощь ветеранам", icon: <FaHandsHelping />, link: "/help", group: "Основные" },
+        { label: "Помощь", icon: <FaHandsHelping />, link: "/help", group: "Основные" },
         { label: "ИИ Ассистент", icon: <FaRobot />, link: "/assistant", group: "Основные", beta: true },
         { label: "Поддержка", icon: <RiCustomerService2Line />, link: "/support", group: "Основные" },
     ];

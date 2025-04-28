@@ -11,7 +11,7 @@ const LoginForm = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        navigate('/')
+        navigate('/about')
     }
 
     const handleTogglePasswordVisibility = () => {
@@ -46,7 +46,6 @@ const LoginForm = () => {
                 <input type="text" name="hiddenUsername" className="hidden" autoComplete="username"/>
                 <input type="password" name="hiddenPassword" className="hidden" autoComplete="new-password"/>
 
-                {/* Условие для скрытия полей при выборе "Гость" */}
                     <>
                         <div className="mb-4">
                             <label htmlFor="username" className="block text-sm font-medium text-white mb-1">

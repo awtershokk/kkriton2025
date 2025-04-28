@@ -29,9 +29,8 @@ const RegForm = () => {
         navigate('/login')
     }
 
-    // Данные для вкладок
     const tabs = [
-        { key: 'volunteer', label: 'Я волонтер' },
+        { key: 'volunteer', label: 'Волонтер' },
         { key: 'nko', label: 'НКО' },
     ];
 

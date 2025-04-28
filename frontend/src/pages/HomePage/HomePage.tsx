@@ -1,11 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import backgroundImg from "../../assets/background/veterans.jpg";
 import InfoBlock from "../../components/Blocks/InfoBlock.tsx";
 import WideInfoBlock from "../../components/Blocks/WideInfoBlock.tsx";
-
 import { FaHeart, FaBriefcase, FaShieldAlt, FaUserShield, FaHandsHelping } from "react-icons/fa";
 
 const HomePage: React.FC = () => {
+    const navigate = useNavigate();
+
+    const handleSupportClick = () => {
+        navigate("/register");
+    };
+
     return (
         <div
             className="h-screen w-screen bg-cover bg-center bg-no-repeat"
@@ -22,6 +28,7 @@ const HomePage: React.FC = () => {
                             облегчая жизнь тем, кто отдал много ради нашей безопасности.
                         </h2>
                         <button
+                            onClick={handleSupportClick}
                             className="w-[300px] bg-[rgba(233,81,0,0.8)] text-[23px] hover:bg-[#E95100] py-2 mt-[20px] rounded"
                         >
                             Поддержать проект
