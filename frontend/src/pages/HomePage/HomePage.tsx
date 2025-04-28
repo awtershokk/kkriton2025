@@ -7,9 +7,9 @@ const HomePage: React.FC = () => {
             className="h-screen w-screen bg-cover bg-center bg-no-repeat"
             style={{backgroundImage: `url(${backgroundImg})`}}
         >
-            <div className="p-[150px] h-calc(100%-200px)] w-[calc(100%-200px)] flex items-center justify-center">
+            <div className="p-[120px] h-calc(100%-200px) flex justify-start">
                 <div className="w-[600px]">
-                    <h1 className="text-[42px] font-bold break-words">
+                    <h1 className="text-[36px] font-bold break-words">
                         Платформа для помощи ветеранам и семьям военнослужащих
                     </h1>
                 </div>
