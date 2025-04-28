@@ -90,6 +90,9 @@ const AssistantPage: React.FC = () => {
 
     return (
         <Layout
+            header={<h1 className="text-3xl font-bold text-white mb-6">
+                ИИ Ассистент
+            </h1>}
             content={
                 <div className="flex flex-col h-screen p-4">
                     {/* Chat messages area */}

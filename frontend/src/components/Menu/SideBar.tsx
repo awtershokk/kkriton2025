@@ -1,4 +1,4 @@
-import { FaHome, FaHandsHelping, FaRobot } from "react-icons/fa";
+import {FaHome, FaHandsHelping, FaRobot, FaRegUser} from "react-icons/fa";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import { RiCustomerService2Line } from "react-icons/ri";
 
@@ -6,10 +6,11 @@ const SidebarMenu = () => {
     const currentPath = window.location.pathname;
 
     const menuItems = [
+        { label: "Мой профиль", icon: <FaRegUser />, link: "/profile", group: "Мой профиль" },
         { label: "О нас", icon: <IoMdInformationCircleOutline />, link: "/about", group: "Основные" },
         { label: "Помощь", icon: <FaHandsHelping />, link: "/help", group: "Основные" },
         { label: "ИИ Ассистент", icon: <FaRobot />, link: "/assistant", group: "Основные", beta: true },
-        { label: "Поддержка", icon: <RiCustomerService2Line />, link: "/support", group: "Основные" },
+        { label: "Поддержка", icon: <RiCustomerService2Line />, link: "/", group: "Основные2", disabled: true },
     ];
 
     const groupedItems = menuItems.reduce((acc, item) => {

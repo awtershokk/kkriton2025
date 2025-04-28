@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa'
-import { useNavigate } from "react-router-dom";
-import backgroundImg from "../../assets/background/veterans.jpg";
-import Tabs from "../../components/buttons/Tabs.tsx";
+import { useNavigate } from "react-router-dom"
+import backgroundImg from "../../assets/background/veterans.jpg"
+import Tabs from "../../components/Buttons/Tabs.tsx"
 
 const RegForm = () => {
     const [email, setEmail] = useState<string>('')
@@ -10,15 +10,64 @@ const RegForm = () => {
     const [password, setPassword] = useState<string>('')
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [activeTab, setActiveTab] = useState<string>('volunteer')
-    const [fullName, setFullName] = useState<string>('') // Для НКО
-    const [shortName, setShortName] = useState<string>('') // Для НКО
-    const [inn, setInn] = useState<string>('') // Для НКО
+    const [fullName, setFullName] = useState<string>('')
+    const [shortName, setShortName] = useState<string>('')
+    const [inn, setInn] = useState<string>('')
+    const [error, setError] = useState<string | null>(null)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const navigate = useNavigate()
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        navigate('/')
+        setIsLoading(true)
+        setError(null)
+
+        try {
+            let response
+            if (activeTab === 'volunteer') {
+                response = await fetch('http://localhost:8080/api/v1/volunteers/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        full_name: fullName,
+                        email,
+                        phone,
+                        password
+                    }),
+                })
+            } else {
+                response = await fetch('http://localhost:8080/api/v1/volunteers/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        full_name: shortName,
+                        email,
+                        phone,
+                        password
+                    }),
+                })
+            }
+
+            const data = await response.json()
+
+            if (!response.ok) {
+                throw new Error(data.error || 'Ошибка регистрации')
+            }
+
+            localStorage.setItem('userId', data.id.toString())
+            localStorage.setItem('userType', activeTab)
+
+            navigate('/about')
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Произошла неизвестная ошибка')
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     const handleTogglePasswordVisibility = () => {
@@ -32,7 +81,7 @@ const RegForm = () => {
     const tabs = [
         { key: 'volunteer', label: 'Волонтер' },
         { key: 'nko', label: 'НКО' },
-    ];
+    ]
 
     return (
         <div
@@ -54,6 +103,12 @@ const RegForm = () => {
                     Регистрация
                 </h2>
 
+                {error && (
+                    <div className="mb-4 p-2 bg-red-100 border border-red-400 text-red-700 rounded">
+                        {error}
+                    </div>
+                )}
+
                 <input type="text" name="hiddenUsername" className="hidden" autoComplete="username"/>
                 <input type="password" name="hiddenPassword" className="hidden" autoComplete="new-password"/>
 
@@ -71,6 +126,7 @@ const RegForm = () => {
                                 className="mt-1 block w-full px-3 py-2 bg-white bg-opacity-70 border border-gray-300 rounded-md shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm"
                                 autoComplete="off"
                                 name="fullName"
+                                required
                             />
                         </div>
                     )}
@@ -87,6 +143,7 @@ const RegForm = () => {
                             className="mt-1 block w-full px-3 py-2 bg-white bg-opacity-70 border border-gray-300 rounded-md shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm"
                             autoComplete="off"
                             name="email"
+                            required
                         />
                     </div>
 
@@ -102,6 +159,7 @@ const RegForm = () => {
                             className="mt-1 block w-full px-3 py-2 bg-white bg-opacity-70 border border-gray-300 rounded-md shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm"
                             autoComplete="off"
                             name="phone"
+                            required
                         />
                     </div>
 
@@ -118,6 +176,8 @@ const RegForm = () => {
                                 className="mt-1 block w-full px-3 py-2 bg-white bg-opacity-70 border border-gray-300 rounded-md shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm pr-10"
                                 autoComplete="new-password"
                                 name="password"
+                                required
+                                minLength={6}
                             />
                             {password && (
                                 <button
@@ -147,6 +207,7 @@ const RegForm = () => {
                                     value={shortName}
                                     onChange={(e) => setShortName(e.target.value)}
                                     className="mt-1 block w-full px-3 py-2 bg-white bg-opacity-70 border border-gray-300 rounded-md shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm"
+                                    required
                                 />
                             </div>
 
@@ -160,18 +221,19 @@ const RegForm = () => {
                                     value={inn}
                                     onChange={(e) => setInn(e.target.value)}
                                     className="mt-1 block w-full px-3 py-2 bg-white bg-opacity-70 border border-gray-300 rounded-md shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:text-sm"
+                                    required
                                 />
                             </div>
                         </>
                     )}
-
                 </>
 
                 <button
                     type="submit"
                     className="w-full bg-[rgba(233,81,0,0.8)] text-[20px] hover:bg-[#E95100] text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-300 mb-4 shadow-md"
+                    disabled={isLoading}
                 >
-                    Зарегистрироваться
+                    {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
                 </button>
 
                 <div className="text-center mt-4">
@@ -186,7 +248,6 @@ const RegForm = () => {
                         </button>
                     </p>
                 </div>
-
             </form>
         </div>
     )

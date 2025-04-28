@@ -18,7 +18,7 @@ const AboutPage = () => {
             }
             content={
                 <div className="max-w-12xl pt-35 mx-auto">
-                    <div className="bg-gray-800 p-6 rounded-lg shadow-md">
+                    <div className="bg-gray-700 p-6 rounded-lg shadow-md">
                         <h2 className="text-2xl font-semibold text-white mb-4">О нашей платформе</h2>
                         <p className="text-white mb-4">
                             Наша платформа объединяет волонтеров, некоммерческие организации и граждан для поддержки ветеранов, участников СВО и семей военнослужащих. Мы предлагаем удобный сервис для поиска помощи и участия в различных инициативах.
