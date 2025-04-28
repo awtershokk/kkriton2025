@@ -5,7 +5,6 @@ import backgroundImg from "../../assets/background/veterans.jpg";
 import Tabs from "../../components/buttons/Tabs.tsx";
 
 const RegForm = () => {
-    const [username, setUsername] = useState<string>('')
     const [email, setEmail] = useState<string>('')
     const [phone, setPhone] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -13,11 +12,8 @@ const RegForm = () => {
     const [activeTab, setActiveTab] = useState<string>('volunteer')
     const [fullName, setFullName] = useState<string>('') // Для НКО
     const [shortName, setShortName] = useState<string>('') // Для НКО
-    const [ogrn, setOgrn] = useState<string>('') // Для НКО
     const [inn, setInn] = useState<string>('') // Для НКО
-    const [kpp, setKpp] = useState<string>('') // Для НКО
-    const [legalAddress, setLegalAddress] = useState<string>('') // Для НКО
-    const [actualAddress, setActualAddress] = useState<string>('') // Для НКО
+
     const navigate = useNavigate()
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
