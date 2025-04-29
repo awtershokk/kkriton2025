@@ -12,6 +12,7 @@ type Volunteer struct {
 
 type VolunteerRepository interface {
 	Create(volunteer *Volunteer) error
+	Login(email string, password string) (*Volunteer, error)
 	GetByEmail(email string) (*Volunteer, error)
 	GetById(id uint) (*Volunteer, error)
 }
@@ -19,4 +20,5 @@ type VolunteerRepository interface {
 type VolunteerService interface {
 	RegisterVolunteer(volunteer *Volunteer) (uint, error)
 	GetVolunteerById(id uint) (*Volunteer, error)
+	LoginVolunteer(email string, password string) (*Volunteer, error)
 }

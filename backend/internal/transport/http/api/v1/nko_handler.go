@@ -15,6 +15,11 @@ func NewNkoHandler(service domain.NkoService) *NkoHandler {
 	return &NkoHandler{service: service}
 }
 
+type LoginNkoRequest struct {
+	Email    string `json:"email" binding:"required,email"`
+	Password string `json:"password" binding:"required"`
+}
+
 type RegisterNkoRequest struct {
 	Email    string `json:"email" binding:"required,email"`
 	Phone    string `json:"phone" binding:"required"`
@@ -62,6 +67,24 @@ func (h *NkoHandler) GetByID(c *gin.Context) {
 	nko, err := h.service.GetNkoById(uint(id))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	nko.Password = ""
+
+	c.JSON(http.StatusOK, nko)
+}
+func (h *NkoHandler) Login(c *gin.Context) {
+	var req LoginVolunteerRequest
+
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	nko, err := h.service.LoginNko(req.Email, req.Password)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid email or password"})
 		return
 	}
 

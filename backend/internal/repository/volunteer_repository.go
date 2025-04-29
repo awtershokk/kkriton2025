@@ -19,6 +19,15 @@ func (r *volunteerRepository) Create(volunteer *domain.Volunteer) error {
 	return r.db.Create(volunteer).Error
 }
 
+func (r *volunteerRepository) Login(email string, password string) (*domain.Volunteer, error) {
+	var volunteer domain.Volunteer
+	err := r.db.Where("email = ? AND password = ?", email, password).First(&volunteer).Error
+	if err != nil {
+		return nil, err
+	}
+	return &volunteer, nil
+}
+
 func (r *volunteerRepository) GetByEmail(email string) (*domain.Volunteer, error) {
 	var volunteer domain.Volunteer
 	err := r.db.Where("email = ?", email).First(&volunteer).Error

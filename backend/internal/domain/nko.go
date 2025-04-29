@@ -14,10 +14,12 @@ type Nko struct {
 type NkoRepository interface {
 	Create(nko *Nko) error
 	GetByEmail(email string) (*Nko, error)
+	Login(email string, password string) (*Nko, error)
 	GetById(id uint) (*Nko, error)
 }
 
 type NkoService interface {
 	RegisterNko(nko *Nko) (uint, error)
 	GetNkoById(id uint) (*Nko, error)
+	LoginNko(email string, password string) (*Nko, error)
 }

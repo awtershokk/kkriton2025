@@ -27,6 +27,14 @@ func (r *nkoRepository) GetByEmail(email string) (*domain.Nko, error) {
 	}
 	return &nko, nil
 }
+func (r *nkoRepository) Login(email string, password string) (*domain.Nko, error) {
+	var nko domain.Nko
+	err := r.db.Where("email = ? AND password = ?", email, password).First(&nko).Error
+	if err != nil {
+		return nil, err
+	}
+	return &nko, nil
+}
 
 func (r *nkoRepository) GetById(id uint) (*domain.Nko, error) {
 	var nko domain.Nko

@@ -15,6 +15,11 @@ func NewVolunteerHandler(service domain.VolunteerService) *VolunteerHandler {
 	return &VolunteerHandler{service: service}
 }
 
+type LoginVolunteerRequest struct {
+	Email    string `json:"email" binding:"required,email"`
+	Password string `json:"password" binding:"required"`
+}
+
 type RegisterVolunteerRequest struct {
 	FullName string `json:"full_name" binding:"required"`
 	Email    string `json:"email" binding:"required,email"`
@@ -60,6 +65,25 @@ func (h *VolunteerHandler) GetByID(c *gin.Context) {
 	volunteer, err := h.service.GetVolunteerById(uint(id))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	volunteer.Password = ""
+
+	c.JSON(http.StatusOK, volunteer)
+}
+
+func (h *VolunteerHandler) Login(c *gin.Context) {
+	var req LoginVolunteerRequest
+
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	volunteer, err := h.service.LoginVolunteer(req.Email, req.Password)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid email or password"})
 		return
 	}
 

@@ -35,3 +35,14 @@ func (s *nkoService) GetNkoById(id uint) (*domain.Nko, error) {
 	}
 	return nko, nil
 }
+
+func (s *nkoService) LoginNko(email string, password string) (*domain.Nko, error) {
+	nko, err := s.repo.Login(email, password)
+	if err != nil {
+		return nil, errors.New("nko not found")
+	}
+	if nko == nil {
+		return nil, errors.New("nko not found")
+	}
+	return nko, nil
+}

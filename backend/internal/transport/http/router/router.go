@@ -23,6 +23,7 @@ func NewRouter(
 	v1Group := r.Group("/api/v1")
 	{
 		v1Group.POST("/volunteers/register", volunteerHandler.Register)
+		v1Group.POST("/volunteers/login", volunteerHandler.Login)
 		v1Group.GET("/volunteers/:id", volunteerHandler.GetByID)
 
 		v1Group.POST("/events", eventHandler.Create)
@@ -31,6 +32,8 @@ func NewRouter(
 		v1Group.DELETE("/events/:id", eventHandler.Delete)
 
 		v1Group.POST("/nko/register", nkoHandler.Register)
+		v1Group.POST("/nko/login", nkoHandler.Login)
+
 		v1Group.GET("/nko/:id", nkoHandler.GetByID)
 	}
 

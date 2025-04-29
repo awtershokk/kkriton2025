@@ -35,3 +35,14 @@ func (s *volunteerService) GetVolunteerById(id uint) (*domain.Volunteer, error) 
 	}
 	return volunteer, nil
 }
+
+func (s *volunteerService) LoginVolunteer(email string, password string) (*domain.Volunteer, error) {
+	volunteer, err := s.repo.Login(email, password)
+	if err != nil {
+		return nil, errors.New("volunteer not found")
+	}
+	if volunteer == nil {
+		return nil, errors.New("volunteer not found")
+	}
+	return volunteer, nil
+}
