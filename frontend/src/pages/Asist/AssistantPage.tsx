@@ -10,11 +10,11 @@ interface Message {
 const AssistantPage: React.FC = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
-    const [isTyping, setIsTyping] = useState(false); // Для отслеживания статуса печати
-    const [typingDots, setTypingDots] = useState(""); // Строка с точками
+    const [isTyping, setIsTyping] = useState(false);
+    const [typingDots, setTypingDots] = useState("");
     const wsRef = useRef<WebSocket | null>(null);
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
-    const typingIntervalRef = useRef<NodeJS.Timeout | null>(null); // Для хранения интервала
+    const typingIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
     // Scroll to bottom when messages update
     useEffect(() => {
