@@ -32,21 +32,27 @@ func (r *veteranRepository) Create(veteran *domain.Veteran) error {
 	return nil
 }
 
-func (r *veteranRepository) GetById(id uint) (*domain.Veteran, error) {
-	var modelVeteran models.Veteran
+func (r *veteranRepository) GetAll() ([]*domain.Veteran, error) {
+	var modelVeterans []models.Veteran
 
-	if err := r.db.Where("id = ?", id).First(&modelVeteran).Error; err != nil {
+	// Извлекаем всех ветеранов
+	if err := r.db.Find(&modelVeterans).Error; err != nil {
 		return nil, err
 	}
 
-	veteran := &domain.Veteran{
-		ID:         modelVeteran.ID,
-		LastName:   modelVeteran.LastName,
-		FirstName:  modelVeteran.FirstName,
-		Patronymic: modelVeteran.Patronymic,
-		BirthDate:  modelVeteran.BirthDate,
-		Biography:  modelVeteran.Biography,
+	// Преобразуем модель в доменную сущность
+	var veterans []*domain.Veteran
+	for _, modelVeteran := range modelVeterans {
+		veteran := &domain.Veteran{
+			ID:         modelVeteran.ID,
+			LastName:   modelVeteran.LastName,
+			FirstName:  modelVeteran.FirstName,
+			Patronymic: modelVeteran.Patronymic,
+			BirthDate:  modelVeteran.BirthDate,
+			Biography:  modelVeteran.Biography,
+		}
+		veterans = append(veterans, veteran)
 	}
 
-	return veteran, nil
+	return veterans, nil
 }

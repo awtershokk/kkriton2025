@@ -4,7 +4,6 @@ import (
 	"backend/internal/domain"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"strconv"
 )
 
 type VeteranHandler struct {
@@ -51,15 +50,8 @@ func (h *VeteranHandler) CreateVeteran(c *gin.Context) {
 	})
 }
 
-func (h *VeteranHandler) GetVeteranByID(c *gin.Context) {
-	idParam := c.Param("id")
-	id, err := strconv.ParseUint(idParam, 10, 32)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid veteran ID"})
-		return
-	}
-
-	veteran, err := h.service.GetVeteranById(uint(id))
+func (h *VeteranHandler) GetVeteranAll(c *gin.Context) {
+	veteran, err := h.service.GetAllVeterans()
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return

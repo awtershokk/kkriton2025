@@ -30,15 +30,15 @@ func (s *veteranService) CreateVeteran(veteran *domain.Veteran) (uint, error) {
 	return veteran.ID, nil
 }
 
-func (s *veteranService) GetVeteranById(id uint) (*domain.Veteran, error) {
-	veteran, err := s.repo.GetById(id)
+func (s *veteranService) GetAllVeterans() ([]*domain.Veteran, error) {
+	veterans, err := s.repo.GetAll()
 	if err != nil {
-		return nil, errors.New("veteran not found")
+		return nil, errors.New("ошибка при получении списка ветеранов")
 	}
 
-	if veteran == nil {
-		return nil, errors.New("veteran not found")
+	if veterans == nil || len(veterans) == 0 {
+		return nil, errors.New("ветераны не найдены")
 	}
 
-	return veteran, nil
+	return veterans, nil
 }

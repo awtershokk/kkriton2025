@@ -34,7 +34,7 @@ func (r *donationRepository) Create(donation *domain.Donation) error {
 func (r *donationRepository) GetAll() ([]domain.Donation, error) {
 	var modelDonations []models.Donation
 
-	if err := r.db.Find(&modelDonations).Error; err != nil {
+	if err := r.db.Preload("Veteran").Find(&modelDonations).Error; err != nil {
 		return nil, err
 	}
 
@@ -46,6 +46,14 @@ func (r *donationRepository) GetAll() ([]domain.Donation, error) {
 			Target:    modelDonation.Target,
 			Collected: modelDonation.Collected,
 			Purpose:   modelDonation.Purpose,
+			Veteran: &domain.Veteran{
+				ID:         modelDonation.Veteran.ID,
+				FirstName:  modelDonation.Veteran.FirstName,
+				LastName:   modelDonation.Veteran.LastName,
+				Patronymic: modelDonation.Veteran.Patronymic,
+				BirthDate:  modelDonation.Veteran.BirthDate,
+				Biography:  modelDonation.Veteran.Biography,
+			},
 		})
 	}
 
