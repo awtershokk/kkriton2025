@@ -23,7 +23,7 @@ const AssistantPage: React.FC = () => {
 
     // Initialize WebSocket connection
     useEffect(() => {
-        const ws = new WebSocket("ws://localhost:8080/ws");
+        const ws = new WebSocket("ws://localhost:8081/ws");
         wsRef.current = ws;
 
         ws.addEventListener("open", () => {
@@ -94,7 +94,7 @@ const AssistantPage: React.FC = () => {
             content={
                 <div className="flex flex-col h-screen p-4">
                     {/* Chat messages area */}
-                    <div className="flex-1 overflow-y-auto space-y-4 pr-1 mb-4">
+                    <div className="flex-1 overflow-y-auto mt-18 space-y-4 pr-1 mb-4">
                         {messages.map((msg, idx) => (
                             <div
                                 key={idx}
@@ -146,7 +146,7 @@ const AssistantPage: React.FC = () => {
                             />
                             <button
                                 onClick={sendMessage}
-                                className="absolute top-1/2 right-6 transform -translate-y-1/2 text-gray-600 hover:text-gray-300"
+                                className="absolute top-[calc(50%-3px)] right-6 transform -translate-y-1/2 text-gray-600 hover:text-gray-300"
                             >
                                 <IoSend className="w-6 h-6"/>
                             </button>
