@@ -168,14 +168,6 @@ const LoginForm = () => {
                             Зарегистрируйтесь
                         </button>
                     </p>
-                    <p className="text-sm text-gray-300 mt-2">
-                        <button
-                            type="button"
-                            className="text-white hover:text-[rgba(233,81,0,0.8)] focus:outline-none font-medium transition-colors duration-200"
-                        >
-                            Войти как гость
-                        </button>
-                    </p>
                 </div>
 
             </form>

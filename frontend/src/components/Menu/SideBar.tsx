@@ -11,7 +11,7 @@ const SidebarMenu = () => {
         { label: "О нас", icon: <IoMdInformationCircleOutline />, link: "/about", group: "Основные" },
         { label: "Помощь", icon: <FaHandsHelping />, link: "/help", group: "Основные" },
         { label: "Мероприятия", icon: <LuTicketSlash />, link: "/events", group: "Основные" },
-        { label: "ИИ Ассистент", icon: <FaRobot />, link: "/assistant", group: "Основные", beta: true },
+        // { label: "ИИ Ассистент", icon: <FaRobot />, link: "/assistant", group: "Основные", beta: true },
         { label: "Поддержка", icon: <RiCustomerService2Line />, link: "/", group: "Основные2", disabled: true },
     ];
 
