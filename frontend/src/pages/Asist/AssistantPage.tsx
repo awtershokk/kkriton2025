@@ -23,7 +23,7 @@ const AssistantPage: React.FC = () => {
 
     // Initialize WebSocket connection
     useEffect(() => {
-        const ws = new WebSocket("ws://api.ctrlstudio.tech:8081/ws");
+        const ws = new WebSocket("ws://localhost:8081/ws");
         wsRef.current = ws;
 
         ws.addEventListener("open", () => {

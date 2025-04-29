@@ -22,8 +22,12 @@ interface Donation {
 const HelpPage = () => {
     const navigate = useNavigate();
     const [donations, setDonations] = useState<Donation[] | null>(null);
+    const [editingDonationId, setEditingDonationId] = useState<number | null>(null); // Track donation being edited
+    const [donationAmount, setDonationAmount] = useState<number | string>(""); // Store input amount for donation
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false); // Track if submitting to prevent multiple submissions
 
-    useEffect(() => {
+    // Fetch donations when the component loads or after the submission of donation
+    const fetchDonations = () => {
         fetch("https://api.ctrlstudio.tech/api/v1/donations")
             .then((response) => response.json())
             .then((data) => {
@@ -34,11 +38,11 @@ const HelpPage = () => {
             .catch((error) => {
                 console.error("Ошибка получения данных о пожертвованиях:", error);
             });
-    }, []);
-
-    const handleSupportClick = (donationId: number) => {
-        navigate(`/donate/${donationId}`);
     };
+
+    useEffect(() => {
+        fetchDonations(); // Initial fetch
+    }, []);
 
     // Функция для вычисления возраста на основе даты рождения
     const calculateAge = (birthDate: string) => {
@@ -47,7 +51,6 @@ const HelpPage = () => {
         let age = today.getFullYear() - birth.getFullYear();
         const monthDifference = today.getMonth() - birth.getMonth();
 
-        // Если день рождения еще не был в этом году, уменьшаем возраст на 1
         if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birth.getDate())) {
             age--;
         }
@@ -59,12 +62,53 @@ const HelpPage = () => {
         navigate('/help/create');
     };
 
+    const handleSupportClick = (donationId: number, currentCollected: number) => {
+        setEditingDonationId(donationId); // Set the donation being edited
+        setDonationAmount(currentCollected); // Set current collected value as starting value
+    };
+
+    const handleDonationAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setDonationAmount(value === "" ? "" : Number(value)); // Allow clearing of input
+    };
+
+    const handleDonationSubmit = (donationId: number) => {
+        // Ensure the donation amount is at least 100 and valid
+        if (donationAmount && !isNaN(Number(donationAmount)) && Number(donationAmount) >= 100) {
+            const updatedCollected = Number(donationAmount);
+
+            setIsSubmitting(true); // Set submitting to true to prevent multiple submissions
+
+            fetch(`https://api.ctrlstudio.tech/api/v1/donations/${donationId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    collected: updatedCollected
+                })
+            })
+                .then((response) => response.json())
+                .then(() => {
+                    fetchDonations(); // Re-fetch donations after submission
+                    setEditingDonationId(null); // Close input field
+                    setDonationAmount(""); // Reset donation amount
+                    setIsSubmitting(false); // Reset submitting state
+                })
+                .catch((error) => {
+                    console.error("Ошибка обновления пожертвования:", error);
+                    setIsSubmitting(false); // Reset submitting state in case of error
+                });
+        } else {
+            alert("Введите сумму пожертвования не менее 100 рублей.");
+        }
+    };
+
     return (
         <Layout
             header={<h1 className="text-3xl font-bold text-white mb-6">Помощь ветеранам</h1>}
             content={
                 <div className="max-w-12xl mx-auto pt-35">
-                    {/* Кнопка "Создать пожертвование" над всем */}
                     <button
                         className="bg-[rgba(233,81,0,0.8)] hover:bg-[#E95100] ml-1 text-white py-2 px-6 rounded mb-5"
                         onClick={handleCreateEvent}
@@ -120,13 +164,33 @@ const HelpPage = () => {
                                             </div>
                                         </div>
 
-                                        <div className="absolute bottom-5 right-4">
-                                            <button
-                                                className="bg-orange-600 hover:bg-orange-500 text-white py-2 px-6 rounded transition-colors"
-                                                onClick={() => handleSupportClick(donation.id)}
-                                            >
-                                                Поддержать
-                                            </button>
+                                        <div className="absolute bottom-5 right-4 flex items-center space-x-2">
+                                            {/* Show the input field and button side by side */}
+                                            {editingDonationId === donation.id ? (
+                                                <>
+                                                    <input
+                                                        type="number"
+                                                        className="w-24 p-2 border border-gray-300 rounded"
+                                                        placeholder="Сумма"
+                                                        value={donationAmount}
+                                                        onChange={handleDonationAmountChange}
+                                                    />
+                                                    <button
+                                                        className={`bg-orange-600 hover:bg-orange-500 text-white py-2 px-6 rounded transition-colors ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
+                                                        onClick={() => handleDonationSubmit(donation.id)}
+                                                        disabled={isSubmitting} // Disable button while submitting
+                                                    >
+                                                        Подтвердить
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <button
+                                                    className="bg-orange-600 hover:bg-orange-500 text-white py-2 px-6 rounded transition-colors"
+                                                    onClick={() => handleSupportClick(donation.id, donation.collected)}
+                                                >
+                                                    Поддержать
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
                                 );

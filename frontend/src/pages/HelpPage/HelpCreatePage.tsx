@@ -53,8 +53,8 @@ const CreateDonationPage = () => {
 
             const donationData = {
                 ...formData,
-                veteran_id: parseInt(formData.veteran_id),  // Преобразуем в число
-                target: parseFloat(formData.target),       // Преобразуем в число
+                veteran_id: parseInt(formData.veteran_id),
+                target: parseFloat(formData.target),
                 purpose: formData.purpose,
                 [userType === 'nko' ? 'nko_id' : 'volunteer_id']: parseInt(userId),
             };
