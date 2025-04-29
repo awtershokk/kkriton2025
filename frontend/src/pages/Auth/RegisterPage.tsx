@@ -38,17 +38,18 @@ const RegForm = () => {
                         password
                     }),
                 })
-            } else {
-                response = await fetch('http://localhost:8080/api/v1/volunteers/register', {
+            } else if (activeTab === 'nko') {
+                response = await fetch('http://localhost:8080/api/v1/nko/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        full_name: shortName,
                         email,
                         phone,
-                        password
+                        password,
+                        named: shortName,
+                        inn
                     }),
                 })
             }
