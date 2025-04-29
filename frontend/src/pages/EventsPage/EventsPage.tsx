@@ -1,6 +1,7 @@
 import Layout from "../../layouts/DefaultLayout.tsx";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaTrash } from "react-icons/fa";
 
 type Volunteer = {
     id: number;
@@ -32,7 +33,6 @@ type Event = {
     nko?: NKO;
 };
 
-
 const EventsPage = () => {
     const navigate = useNavigate();
     const [events, setEvents] = useState<Event[]>([]);
@@ -40,7 +40,6 @@ const EventsPage = () => {
     const [error, setError] = useState<string | null>(null);
     const [userType, setUserType] = useState<string | null>(null);
     const [currentUserId, setCurrentUserId] = useState<number | null>(null);
-
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -63,7 +62,7 @@ const EventsPage = () => {
                 }
 
                 const data = await response.json();
-                setEvents(data);
+                setEvents(Array.isArray(data) ? data : []);
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Произошла неизвестная ошибка');
             } finally {
@@ -126,62 +125,67 @@ const EventsPage = () => {
             header={
                 <div className="flex justify-between items-center">
                     <h1 className="text-3xl font-bold text-white mb-6">Мероприятия</h1>
-
                 </div>
             }
             content={
                 <div className="max-w-12xl pt-35 mx-auto">
                     {userType && (
                         <button
-                            className="bg-[rgba(233,81,0,0.8)] hover:bg-[#E95100] text-white py-2 px-6 rounded mb-5"
+                            className="bg-[rgba(233,81,0,0.8)] hover:bg-[#E95100] ml-1 text-white py-2 px-6 rounded mb-5"
                             onClick={handleCreateEvent}
                         >
                             Создать мероприятие
                         </button>
                     )}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {events.map((event) => (
-                            <div key={event.id} className="bg-gray-700 p-6 rounded-lg shadow-md text-white">
-                                <h2 className="text-xl font-semibold mb-2">{event.name}</h2>
-                                <div className="mb-2">
-                                    <p className="font-medium">Дата и время:</p>
-                                    <p>{formatDate(event.start_time)} - {formatDate(event.end_time)}</p>
-                                </div>
-                                <div className="mb-2">
-                                    <p className="font-medium">Место:</p>
-                                    <p>{event.location}</p>
-                                </div>
-                                <div className="mb-2">
-                                    <p className="font-medium">Организатор:</p>
-                                    {event.volunteer ? (
-                                        <p>{event.volunteer.full_name}</p>
-                                    ) : event.nko ? (
-                                        <p>{event.nko.name}</p>
-                                    ) : (
-                                        <p>Неизвестен</p>
-                                    )}
-                                </div>
-                                <div className="mb-4">
-                                    <p className="font-medium">Цель:</p>
-                                    <p>{event.purpose}</p>
-                                </div>
-                                <div className="flex flex-wrap gap-2">
+                    {events.length === 0 ? (
+                        <div className="ml-1 text-gray-400 text-[20px]">Нет мероприятий</div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {events.map((event) => (
+                                <div key={event.id} className="relative bg-gray-700 p-6 rounded-lg shadow-md text-white">
+                                    <h2 className="text-xl font-semibold mb-2">{event.name}</h2>
+                                    <div className="mb-2">
+                                        <p className="font-medium">Дата и время:</p>
+                                        <p>{formatDate(event.start_time)} - {formatDate(event.end_time)}</p>
+                                    </div>
+                                    <div className="mb-2">
+                                        <p className="font-medium">Место:</p>
+                                        <p>{event.location}</p>
+                                    </div>
+                                    <div className="mb-2">
+                                        <p className="font-medium">Организатор:</p>
+                                        {event.volunteer ? (
+                                            <p>{event.volunteer.full_name}</p>
+                                        ) : event.nko ? (
+                                            <p>{event.nko.name}</p>
+                                        ) : (
+                                            <p>Неизвестен</p>
+                                        )}
+                                    </div>
+                                    <div className="mb-4">
+                                        <p className="font-medium">Цель:</p>
+                                        <p>{event.purpose}</p>
+                                    </div>
+
                                     {userType && currentUserId && (
                                         ((userType === 'volunteer' && event.volunteer_id === currentUserId) ||
                                             (userType === 'nko' && event.nko_id === currentUserId)) && (
-                                            <button
-                                                className="bg-red-600 hover:bg-red-500 text-white py-1 px-4 rounded text-sm"
-                                                onClick={() => handleDeleteEvent(event.id)}
-                                            >
-                                                Удалить
-                                            </button>
+                                                <div className="absolute bottom-6 right-6">
+                                                    <button
+                                                        title="Удалить"
+                                                        onClick={() => handleDeleteEvent(event.id)}
+                                                        className="text-red-500 hover:text-red-700 text-xl"
+                                                    >
+                                                        <FaTrash/>
+                                                    </button>
+                                                </div>
+
                                         )
                                     )}
                                 </div>
-                            </div>
-
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             }
         />
