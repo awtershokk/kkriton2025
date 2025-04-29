@@ -24,7 +24,7 @@ const HelpPage = () => {
     const [donations, setDonations] = useState<Donation[] | null>(null);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/v1/donations")
+        fetch("https://api.ctrlstudio.tech/api/v1/donations")
             .then((response) => response.json())
             .then((data) => {
                 if (data) {
@@ -55,11 +55,23 @@ const HelpPage = () => {
         return age;
     };
 
+    const handleCreateEvent = () => {
+        navigate('/help/create');
+    };
+
     return (
         <Layout
             header={<h1 className="text-3xl font-bold text-white mb-6">Помощь ветеранам</h1>}
             content={
                 <div className="max-w-12xl mx-auto pt-35">
+                    {/* Кнопка "Создать пожертвование" над всем */}
+                    <button
+                        className="bg-[rgba(233,81,0,0.8)] hover:bg-[#E95100] ml-1 text-white py-2 px-6 rounded mb-5"
+                        onClick={handleCreateEvent}
+                    >
+                        Создать пожертвование
+                    </button>
+
                     {donations === null ? (
                         <p>Загрузка данных о пожертвованиях...</p>
                     ) : donations.length === 0 ? (
@@ -75,9 +87,11 @@ const HelpPage = () => {
                                 const age = donation.veteran.birth_date ? calculateAge(donation.veteran.birth_date) : "Не указано";
 
                                 return (
-                                    <div key={donation.id} className="relative bg-gray-700 p-6 rounded-lg shadow-md text-white">
+                                    <div key={donation.id}
+                                         className="relative bg-gray-700 p-6 rounded-lg shadow-md text-white">
                                         <h2 className="text-xl font-semibold mb-2">
-                                            Пожертвование для ветерана {donation.veteran.first_name} {donation.veteran.last_name}
+                                            Пожертвование для
+                                            ветерана {donation.veteran.first_name} {donation.veteran.last_name}
                                         </h2>
                                         <div className="mb-2">
                                             <p className="font-medium">Цель:</p>
