@@ -11,10 +11,10 @@ type Veteran struct {
 
 type VeteranRepository interface {
 	Create(veteran *Veteran) error
-	GetById(id uint) (*Veteran, error)
+	GetAll() ([]*Veteran, error)
 }
 
 type VeteranService interface {
 	CreateVeteran(veteran *Veteran) (uint, error)
-	GetVeteranById(id uint) (*Veteran, error)
+	GetAllVeterans() ([]*Veteran, error) // Новый метод для получения всех ветеранов
 }

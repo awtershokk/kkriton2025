@@ -39,7 +39,7 @@ func NewRouter(
 		v1Group.GET("/nko/:id", nkoHandler.GetByID)
 
 		v1Group.POST("/veteran/create", veteranHandler.CreateVeteran)
-		v1Group.GET("/veteran/:id", veteranHandler.GetVeteranByID)
+		v1Group.GET("/veteran", veteranHandler.GetVeteranAll)
 
 		v1Group.POST("/donations", donationHandler.CreateDonation)
 		v1Group.GET("/donations", donationHandler.GetAllDonations)
