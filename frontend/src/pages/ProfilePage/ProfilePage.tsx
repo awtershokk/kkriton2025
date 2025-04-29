@@ -43,14 +43,14 @@ const ProfilePage = () => {
                 setUserType(userType);
 
                 if (userType === 'volunteer') {
-                    const response = await fetch(`http://89.169.0.160:8080/api/v1/volunteers/${userId}`);
+                    const response = await fetch(`https://api.ctrlstudio.tech/api/v1/volunteers/${userId}`);
                     if (!response.ok) {
                         throw new Error('Не удалось загрузить профиль волонтера');
                     }
                     const data = await response.json();
                     setProfile(data);
                 } else if (userType === 'nko') {
-                    const response = await fetch(`http://89.169.0.160:8080/api/v1/nko/${userId}`);
+                    const response = await fetch(`https://api.ctrlstudio.tech/api/v1/nko/${userId}`);
                     if (!response.ok) {
                         throw new Error('Не удалось загрузить профиль НКО');
                     }

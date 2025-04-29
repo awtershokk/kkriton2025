@@ -16,7 +16,7 @@ const LoginForm = () => {
         setError('')
 
         try {
-            const nkoResponse = await fetch('http://89.169.0.160:8080/api/v1/nko/login', {
+            const nkoResponse = await fetch('https://api.ctrlstudio.tech/api/v1/nko/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ const LoginForm = () => {
             if (!nkoResponse.ok) {
                 const nkoErrorData = await nkoResponse.json()
                 if (nkoErrorData.error === 'invalid email or password') {
-                    const volunteerResponse = await fetch('http://89.169.0.160:8080/api/v1/volunteers/login', {
+                    const volunteerResponse = await fetch('https://api.ctrlstudio.tech/api/v1/volunteers/login', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
