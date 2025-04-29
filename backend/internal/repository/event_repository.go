@@ -16,6 +16,7 @@ func NewEventRepository(db *gorm.DB) domain.EventRepository {
 
 func (r *eventRepository) Create(event *domain.Event) error {
 	model := models.Event{
+		Name:        event.Name,
 		StartTime:   event.StartTime,
 		EndTime:     event.EndTime,
 		Location:    event.Location,
@@ -33,6 +34,7 @@ func (r *eventRepository) GetByID(id uint) (*domain.Event, error) {
 	}
 
 	return &domain.Event{
+		Name:        model.Name,
 		ID:          model.ID,
 		StartTime:   model.StartTime,
 		EndTime:     model.EndTime,
@@ -52,6 +54,7 @@ func (r *eventRepository) List() ([]*domain.Event, error) {
 	var events []*domain.Event
 	for _, m := range modelsList {
 		events = append(events, &domain.Event{
+			Name:        m.Name,
 			ID:          m.ID,
 			StartTime:   m.StartTime,
 			EndTime:     m.EndTime,

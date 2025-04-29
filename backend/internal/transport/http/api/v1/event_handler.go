@@ -17,6 +17,7 @@ func NewEventHandler(service domain.EventService) *EventHandler {
 }
 
 type CreateEventRequest struct {
+	Name        string `json:"name"`
 	StartTime   string `json:"start_time" binding:"required"`
 	EndTime     string `json:"end_time" binding:"required"`
 	Location    string `json:"location" binding:"required"`
@@ -45,6 +46,7 @@ func (h *EventHandler) Create(c *gin.Context) {
 	}
 
 	event := &domain.Event{
+		Name:        req.Name,
 		StartTime:   startTime,
 		EndTime:     endTime,
 		Location:    req.Location,

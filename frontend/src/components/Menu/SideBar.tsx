@@ -9,6 +9,7 @@ const SidebarMenu = () => {
         { label: "Мой профиль", icon: <FaRegUser />, link: "/profile", group: "Мой профиль" },
         { label: "О нас", icon: <IoMdInformationCircleOutline />, link: "/about", group: "Основные" },
         { label: "Помощь", icon: <FaHandsHelping />, link: "/help", group: "Основные" },
+        { label: "Мероприятия", icon: <FaHandsHelping />, link: "/events", group: "Основные" },
         { label: "ИИ Ассистент", icon: <FaRobot />, link: "/assistant", group: "Основные", beta: true },
         { label: "Поддержка", icon: <RiCustomerService2Line />, link: "/", group: "Основные2", disabled: true },
     ];

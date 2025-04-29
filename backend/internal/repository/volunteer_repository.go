@@ -1,8 +1,10 @@
 package repository
 
 import (
+	"backend/internal/database/postgres/models"
 	"backend/internal/domain"
 	"gorm.io/gorm"
+	"time"
 )
 
 type volunteerRepository struct {
@@ -32,5 +34,23 @@ func (r *volunteerRepository) GetById(id uint) (*domain.Volunteer, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	var totalEvents int64
+	err = r.db.Model(&models.Event{}).Where("volunteer_id = ?", id).Count(&totalEvents).Error
+	if err != nil {
+		return nil, err
+	}
+
+	var completedEvents int64
+	err = r.db.Model(&models.Event{}).
+		Where("volunteer_id = ? AND end_time < ?", id, time.Now()).
+		Count(&completedEvents).Error
+	if err != nil {
+		return nil, err
+	}
+
+	volunteer.TotalEvents = int(totalEvents)
+	volunteer.CompletedEvents = int(completedEvents)
+
 	return &volunteer, nil
 }

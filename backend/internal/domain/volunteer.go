@@ -1,11 +1,13 @@
 package domain
 
 type Volunteer struct {
-	ID       uint   `json:"id"`
-	FullName string `json:"full_name"`
-	Email    string `json:"email"`
-	Phone    string `json:"phone"`
-	Password string `json:"-"`
+	ID              uint   `json:"id"`
+	FullName        string `json:"full_name"`
+	Email           string `json:"email"`
+	Phone           string `json:"phone"`
+	Password        string `json:"-"`
+	TotalEvents     int    `gorm:"-"`
+	CompletedEvents int    `gorm:"-"`
 }
 
 type VolunteerRepository interface {

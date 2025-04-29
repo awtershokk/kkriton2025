@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 type VolunteerProfile = {
+    TotalEvents: number;
+    CompletedEvents: number;
     id: number;
     full_name: string;
     email: string;
@@ -112,11 +114,11 @@ const ProfilePage = () => {
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-white">
                                         <div className="bg-gray-600 p-4 rounded">
                                             <p className="font-medium">Всего мероприятий</p>
-                                            <p className="text-xl">12</p>
+                                            <p className="text-xl">{profile.TotalEvents}</p>
                                         </div>
                                         <div className="bg-gray-600 p-4 rounded">
                                             <p className="font-medium">Завершенных мероприятий</p>
-                                            <p className="text-xl">56</p>
+                                            <p className="text-xl">{profile.CompletedEvents}</p>
                                         </div>
                                         <div className="bg-gray-600 p-4 rounded">
                                             <p className="font-medium">Объявлений о помощи</p>
