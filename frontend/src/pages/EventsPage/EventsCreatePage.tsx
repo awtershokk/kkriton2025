@@ -51,7 +51,7 @@ const CreateEventPage = () => {
                 [userType === 'nko' ? 'nko_id' : 'volunteer_id']: parseInt(userId)
             };
 
-            const response = await fetch('http://89.169.0.160:8080/api/v1/events', {
+            const response = await fetch('https://api.ctrlstudio.tech/api/v1/events', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

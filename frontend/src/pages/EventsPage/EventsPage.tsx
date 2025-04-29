@@ -55,7 +55,7 @@ const EventsPage = () => {
 
                 setUserType(userType);
 
-                const response = await fetch('http://89.169.0.160:8080/api/v1/events');
+                const response = await fetch('https://api.ctrlstudio.tech/api/v1/events');
 
                 if (!response.ok) {
                     throw new Error('Не удалось загрузить мероприятия');
@@ -79,7 +79,7 @@ const EventsPage = () => {
 
     const handleDeleteEvent = async (id: number) => {
         try {
-            const response = await fetch(`http://89.169.0.160:8080/api/v1/events/${id}`, {
+            const response = await fetch(`https://api.ctrlstudio.tech/api/v1/events/${id}`, {
                 method: 'DELETE',
             });
 

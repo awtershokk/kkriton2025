@@ -26,7 +26,7 @@ const RegForm = () => {
         try {
             let response
             if (activeTab === 'volunteer') {
-                response = await fetch('http://89.169.0.160:8080/api/v1/volunteers/register', {
+                response = await fetch('https://api.ctrlstudio.tech/api/v1/volunteers/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ const RegForm = () => {
                     }),
                 })
             } else if (activeTab === 'nko') {
-                response = await fetch('http://89.169.0.160:8080/api/v1/nko/register', {
+                response = await fetch('https://api.ctrlstudio.tech/api/v1/nko/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
