@@ -33,7 +33,7 @@ const AssistantPage: React.FC = () => {
         ws.addEventListener("message", (event) => {
             const data = event.data;
             setMessages((prev) => [...prev, { sender: "assistant", text: data }]);
-            setIsTyping(false); // Убираем индикатор печати, когда пришел ответ
+            setIsTyping(false);
             if (typingIntervalRef.current) {
                 clearInterval(typingIntervalRef.current); // Останавливаем интервал
             }
@@ -90,9 +90,7 @@ const AssistantPage: React.FC = () => {
 
     return (
         <Layout
-            header={<h1 className="text-3xl font-bold text-white mb-6">
-                ИИ Ассистент
-            </h1>}
+
             content={
                 <div className="flex flex-col h-screen p-4">
                     {/* Chat messages area */}
