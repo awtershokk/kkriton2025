@@ -32,7 +32,15 @@ func main() {
 	nkoService := service.NewNkoService(nkoRepo)
 	nkoHandler := v1.NewNkoHandler(nkoService)
 
-	r := router.NewRouter(volunteerHandler, eventHandler, nkoHandler)
+	veteranRepo := repository.NewVeteranRepository(db)
+	veteranService := service.NewVeteranService(veteranRepo)
+	veteranHandler := v1.NewVeteranHandler(veteranService)
+
+	donationRepo := repository.NewDonationRepository(db)
+	donationService := service.NewDonationService(donationRepo)
+	donationHandler := v1.NewDonationHandler(donationService)
+
+	r := router.NewRouter(volunteerHandler, eventHandler, nkoHandler, veteranHandler, donationHandler)
 
 	if err := r.Run(":8080"); err != nil {
 		log.Fatalf("failed to run server: %v", err)

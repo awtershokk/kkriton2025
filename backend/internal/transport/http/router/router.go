@@ -10,6 +10,9 @@ func NewRouter(
 	volunteerHandler *v1.VolunteerHandler,
 	eventHandler *v1.EventHandler,
 	nkoHandler *v1.NkoHandler,
+	veteranHandler *v1.VeteranHandler,
+	donationHandler *v1.DonationHandler,
+
 ) *gin.Engine {
 	r := gin.Default()
 
@@ -33,8 +36,13 @@ func NewRouter(
 
 		v1Group.POST("/nko/register", nkoHandler.Register)
 		v1Group.POST("/nko/login", nkoHandler.Login)
-
 		v1Group.GET("/nko/:id", nkoHandler.GetByID)
+
+		v1Group.POST("/veteran/create", veteranHandler.CreateVeteran)
+		v1Group.GET("/veteran/:id", veteranHandler.GetVeteranByID)
+
+		v1Group.POST("/donations", donationHandler.CreateDonation)
+		v1Group.GET("/donations", donationHandler.GetAllDonations)
 	}
 
 	return r
