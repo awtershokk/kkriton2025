@@ -28,7 +28,11 @@ func main() {
 	eventService := service.NewEventService(eventRepo)
 	eventHandler := v1.NewEventHandler(eventService)
 
-	r := router.NewRouter(volunteerHandler, eventHandler)
+	nkoRepo := repository.NewNkoRepository(db)
+	nkoService := service.NewNkoService(nkoRepo)
+	nkoHandler := v1.NewNkoHandler(nkoService)
+
+	r := router.NewRouter(volunteerHandler, eventHandler, nkoHandler)
 
 	if err := r.Run(":8080"); err != nil {
 		log.Fatalf("failed to run server: %v", err)

@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-const apiKey = "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"
+const apiKey = "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"
 
 // Обработчик WebSocket соединений
 func handleWebSocket(conn *websocket.Conn) {
@@ -49,7 +49,7 @@ func handleWebSocket(conn *websocket.Conn) {
 
 		// Подготовка тела запроса
 		requestBody := map[string]interface{}{
-			"model":    "mistralai/mistral-7b-instruct",
+			"model":    "qwen/qwen3-30b-a3b:free",
 			"messages": messages,
 		}
 
