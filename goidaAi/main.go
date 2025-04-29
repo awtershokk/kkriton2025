@@ -12,7 +12,7 @@ import (
 	"strings"
 )
 
-const apiKey = "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"
+const apiKey = "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"
 
 func handleWebSocket(conn *websocket.Conn) {
 	defer conn.Close()
