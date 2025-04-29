@@ -42,6 +42,8 @@ func NewRouter(
 		v1Group.GET("/veteran", veteranHandler.GetVeteranAll)
 
 		v1Group.POST("/donations", donationHandler.CreateDonation)
+		v1Group.PUT("/donations/:id", donationHandler.UpdateDonation)
+
 		v1Group.GET("/donations", donationHandler.GetAllDonations)
 	}
 

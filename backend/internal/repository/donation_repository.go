@@ -59,3 +59,15 @@ func (r *donationRepository) GetAll() ([]domain.Donation, error) {
 
 	return donations, nil
 }
+func (r *donationRepository) UpdateDonation(donation *domain.Donation) error {
+	var existingDonation domain.Donation
+	if err := r.db.First(&existingDonation, donation.ID).Error; err != nil {
+		return err
+	}
+
+	newCollectedAmount := existingDonation.Collected + donation.Collected
+
+	return r.db.Model(&domain.Donation{}).
+		Where("id = ?", donation.ID).
+		Update("collected", newCollectedAmount).Error
+}

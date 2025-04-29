@@ -48,3 +48,6 @@ func (s *donationService) GetAllDonations() ([]domain.Donation, error) {
 
 	return donations, nil
 }
+func (s *donationService) UpdateDonation(donation *domain.Donation) error {
+	return s.repo.UpdateDonation(donation)
+}

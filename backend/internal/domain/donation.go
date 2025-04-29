@@ -12,9 +12,11 @@ type Donation struct {
 type DonationRepository interface {
 	Create(donation *Donation) error
 	GetAll() ([]Donation, error)
+	UpdateDonation(donation *Donation) error
 }
 
 type DonationService interface {
 	CreateDonation(donation *Donation) (uint, error)
 	GetAllDonations() ([]Donation, error)
+	UpdateDonation(donation *Donation) error
 }
