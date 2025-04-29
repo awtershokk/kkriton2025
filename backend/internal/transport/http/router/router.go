@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func NewRouter(volunteerHandler *v1.VolunteerHandler) *gin.Engine {
+func NewRouter(volunteerHandler *v1.VolunteerHandler, eventHandler *v1.EventHandler) *gin.Engine {
 	r := gin.Default()
 
 	r.Use(cors.New(cors.Config{
@@ -18,8 +18,15 @@ func NewRouter(volunteerHandler *v1.VolunteerHandler) *gin.Engine {
 
 	v1Group := r.Group("/api/v1")
 	{
+		// Волонтёры
 		v1Group.POST("/volunteers/register", volunteerHandler.Register)
 		v1Group.GET("/volunteers/:id", volunteerHandler.GetByID)
+
+		// Мероприятия
+		v1Group.POST("/events", eventHandler.Create)
+		v1Group.GET("/events/:id", eventHandler.GetByID)
+		v1Group.GET("/events", eventHandler.List)
+		v1Group.DELETE("/events/:id", eventHandler.Delete)
 	}
 
 	return r

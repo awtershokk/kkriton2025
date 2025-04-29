@@ -21,6 +21,7 @@ func main() {
 	err = db.AutoMigrate(
 		&models.Volunteer{},
 		&models.NKO{},
+		&models.Event{},
 	)
 	if err != nil {
 		log.Fatalf("failed to auto-migrate models: %v", err)

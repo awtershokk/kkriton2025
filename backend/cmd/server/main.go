@@ -24,7 +24,11 @@ func main() {
 	volunteerService := service.NewVolunteerService(volunteerRepo)
 	volunteerHandler := v1.NewVolunteerHandler(volunteerService)
 
-	r := router.NewRouter(volunteerHandler)
+	eventRepo := repository.NewEventRepository(db)
+	eventService := service.NewEventService(eventRepo)
+	eventHandler := v1.NewEventHandler(eventService)
+
+	r := router.NewRouter(volunteerHandler, eventHandler)
 
 	if err := r.Run(":8080"); err != nil {
 		log.Fatalf("failed to run server: %v", err)
