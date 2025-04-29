@@ -10,6 +10,12 @@ type Event struct {
 	Location    string    `json:"location"`
 	Purpose     string    `json:"purpose"`
 	Description string    `json:"description"`
+
+	NKOID       *uint `json:"nko_id,omitempty"`
+	VolunteerID *uint `json:"volunteer_id,omitempty"`
+
+	NKO       *Nko       `json:"nko,omitempty"`
+	Volunteer *Volunteer `json:"volunteer,omitempty"`
 }
 
 type EventRepository interface {

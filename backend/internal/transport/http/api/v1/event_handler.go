@@ -23,6 +23,8 @@ type CreateEventRequest struct {
 	Location    string `json:"location" binding:"required"`
 	Purpose     string `json:"purpose"`
 	Description string `json:"description"`
+	NKOID       *uint  `json:"nko_id,omitempty"`
+	VolunteerID *uint  `json:"volunteer_id,omitempty"`
 }
 
 func (h *EventHandler) Create(c *gin.Context) {
@@ -46,13 +48,15 @@ func (h *EventHandler) Create(c *gin.Context) {
 	}
 
 	event := &domain.Event{
-		Name:        req.Name,
-		StartTime:   startTime,
-		EndTime:     endTime,
-		Location:    req.Location,
-		Purpose:     req.Purpose,
-		Description: req.Description,
-	}
+    	Name:        req.Name,
+    	StartTime:   startTime,
+    	EndTime:     endTime,
+    	Location:    req.Location,
+    	Purpose:     req.Purpose,
+    	Description: req.Description,
+    	NKOID:       req.NKOID,
+    	VolunteerID: req.VolunteerID,
+    }
 
 	id, err := h.service.CreateEvent(event)
 	if err != nil {

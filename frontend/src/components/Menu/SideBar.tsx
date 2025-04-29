@@ -1,6 +1,7 @@
 import {FaHome, FaHandsHelping, FaRobot, FaRegUser} from "react-icons/fa";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import { RiCustomerService2Line } from "react-icons/ri";
+import {LuTicketSlash} from "react-icons/lu";
 
 const SidebarMenu = () => {
     const currentPath = window.location.pathname;
@@ -9,7 +10,7 @@ const SidebarMenu = () => {
         { label: "Мой профиль", icon: <FaRegUser />, link: "/profile", group: "Мой профиль" },
         { label: "О нас", icon: <IoMdInformationCircleOutline />, link: "/about", group: "Основные" },
         { label: "Помощь", icon: <FaHandsHelping />, link: "/help", group: "Основные" },
-        { label: "Мероприятия", icon: <FaHandsHelping />, link: "/events", group: "Основные" },
+        { label: "Мероприятия", icon: <LuTicketSlash />, link: "/events", group: "Основные" },
         { label: "ИИ Ассистент", icon: <FaRobot />, link: "/assistant", group: "Основные", beta: true },
         { label: "Поддержка", icon: <RiCustomerService2Line />, link: "/", group: "Основные2", disabled: true },
     ];

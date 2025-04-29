@@ -22,6 +22,8 @@ func (r *eventRepository) Create(event *domain.Event) error {
 		Location:    event.Location,
 		Purpose:     event.Purpose,
 		Description: event.Description,
+		NKOID:       event.NKOID,
+		VolunteerID: event.VolunteerID,
 	}
 	return r.db.Create(&model).Error
 }
@@ -41,19 +43,21 @@ func (r *eventRepository) GetByID(id uint) (*domain.Event, error) {
 		Location:    model.Location,
 		Purpose:     model.Purpose,
 		Description: model.Description,
+		NKOID:       model.NKOID,
+		VolunteerID: model.VolunteerID,
 	}, nil
 }
 
 func (r *eventRepository) List() ([]*domain.Event, error) {
 	var modelsList []models.Event
-	err := r.db.Find(&modelsList).Error
+	err := r.db.Preload("NKO").Preload("Volunteer").Find(&modelsList).Error
 	if err != nil {
 		return nil, err
 	}
 
 	var events []*domain.Event
 	for _, m := range modelsList {
-		events = append(events, &domain.Event{
+		event := &domain.Event{
 			Name:        m.Name,
 			ID:          m.ID,
 			StartTime:   m.StartTime,
@@ -61,7 +65,25 @@ func (r *eventRepository) List() ([]*domain.Event, error) {
 			Location:    m.Location,
 			Purpose:     m.Purpose,
 			Description: m.Description,
-		})
+			NKOID:       m.NKOID,
+			VolunteerID: m.VolunteerID,
+		}
+
+		if m.NKO != nil {
+			event.NKO = &domain.Nko{
+				ID:    m.NKO.ID,
+				Named: m.NKO.Named,
+			}
+		}
+
+		if m.Volunteer != nil {
+			event.Volunteer = &domain.Volunteer{
+				ID:       m.Volunteer.ID,
+				FullName: m.Volunteer.FullName,
+			}
+		}
+
+		events = append(events, event)
 	}
 
 	return events, nil
